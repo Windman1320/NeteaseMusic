@@ -49,6 +49,7 @@ public class MineFragment extends Fragment {
     private ArrayList<MyPlaylistItemEntity> list;
     private ListView listView;
     private MyPlaylistAdapter myPlaylistAdapter;
+    private String apiUrl;
 
 
     public MineFragment() {
@@ -73,8 +74,8 @@ public class MineFragment extends Fragment {
                 followeds.setText("粉丝 " + followedsCount);
                 TextView follows = getActivity().findViewById(R.id.follows);
                 follows.setText("关注 " + followsCount + "   |   ");
-//                TextView levelView = getActivity().findViewById(R.id.level);
-//                levelView.setText("Lv." + userLevel + " ");
+                TextView levelView = getActivity().findViewById(R.id.level);
+                levelView.setText("Lv." + userLevel + " ");
 
                 initBackground(backgroundUrl);
             }
@@ -116,6 +117,7 @@ public class MineFragment extends Fragment {
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
         View view = inflater.inflate(R.layout.fragment_mine, container, false);
+        apiUrl = getResources().getString(R.string.api_url);
         initAvatar(view);
         if (userId != ""){
             getUserDetails();
@@ -157,7 +159,7 @@ public class MineFragment extends Fragment {
     private void getUserDetails() {
         if (userId != "") {
             HttpRequestUtil httpRequestUtil = HttpRequestUtil.getInstance();
-            String getUsertDetailsApi = "http://www.jinminrui.cn:3000/user/detail?uid=" + userId;
+            String getUsertDetailsApi = apiUrl + "/user/detail?uid=" + userId;
             httpRequestUtil.getDataAsyn(getUsertDetailsApi, new HttpRequestUtil.MyCallback() {
                 @Override
                 public void success(Call call, Response response) throws IOException {
@@ -189,7 +191,7 @@ public class MineFragment extends Fragment {
 
     private void getMyPlaylist() {
         if (userId != "") {
-            String url = "http://www.jinminrui.cn:3000/user/playlist?uid=" + userId;
+            String url = apiUrl + "/user/playlist?uid=" + userId;
             HttpRequestUtil httpRequestUtil = HttpRequestUtil.getInstance();
             httpRequestUtil.getDataAsyn(url, new HttpRequestUtil.MyCallback() {
                 @Override

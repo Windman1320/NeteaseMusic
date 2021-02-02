@@ -82,13 +82,13 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
         // 开启一个Fragment事务
         FragmentTransaction transaction = fragmentManager.beginTransaction();
         // 先隐藏掉所有的Fragment，以防止有多个Fragment显示在界面上的情况
+        hideFragments(transaction);
+        // 动画 todo 进栈和出栈动画是一样的，需要区分左右
         transaction.setCustomAnimations(
                 R.anim.slide_right_in,
                 R.anim.slide_left_out,
                 R.anim.slide_left_in,
                 R.anim.slide_right_out);
-
-        hideFragments(transaction);
         switch (index) {
             case 0:
                 imageRecommend.setImageResource(R.drawable.recommend);

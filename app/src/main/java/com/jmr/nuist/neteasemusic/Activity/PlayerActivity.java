@@ -66,6 +66,7 @@ public class PlayerActivity extends AppCompatActivity implements View.OnClickLis
 
     private TextSwitcher currentTime;
     private TextView totalTime;
+    private String apiUrl;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -75,7 +76,7 @@ public class PlayerActivity extends AppCompatActivity implements View.OnClickLis
         songId = intent.getStringExtra("id");
         songName = intent.getStringExtra("songName");
         songAuthors = intent.getStringExtra("songAuthors");
-
+        apiUrl = getResources().getString(R.string.api_url);
         backView = findViewById(R.id.back);
         backView.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -126,7 +127,7 @@ public class PlayerActivity extends AppCompatActivity implements View.OnClickLis
                 setAnimations();
             }
         };
-        String url = "http://www.jinminrui.cn:3000/song/detail?ids=" + songId;
+        String url = apiUrl + "/song/detail?ids=" + songId;
         HttpRequestUtil httpRequestUtil = HttpRequestUtil.getInstance();
         httpRequestUtil.getDataAsyn(url, new HttpRequestUtil.MyCallback() {
             @Override
@@ -233,7 +234,7 @@ public class PlayerActivity extends AppCompatActivity implements View.OnClickLis
                 }
             }
         };
-        String url = "http://www.jinminrui.cn:3000/song/url?id=" + songId;
+        String url = apiUrl + "/song/url?id=" + songId;
         HttpRequestUtil httpRequestUtil = HttpRequestUtil.getInstance();
         httpRequestUtil.getDataAsyn(url, new HttpRequestUtil.MyCallback() {
             @Override

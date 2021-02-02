@@ -53,6 +53,7 @@ public class SearchFragment extends Fragment implements TextWatcher {
 
     private int offset;
     private String query = "";
+    private String apiUrl = "";
 
 
     private Handler handler = new Handler() {
@@ -104,6 +105,7 @@ public class SearchFragment extends Fragment implements TextWatcher {
         cancel = getActivity().findViewById(R.id.search_cancel);
         searchInput = getActivity().findViewById(R.id.search_input);
         progressBar = getActivity().findViewById(R.id.progressBar);
+        apiUrl = getResources().getString(R.string.api_url);
 
 
         searchInput.addTextChangedListener(this);
@@ -146,7 +148,7 @@ public class SearchFragment extends Fragment implements TextWatcher {
     private void search() {
         HttpRequestUtil httpRequestUtil = HttpRequestUtil.getInstance();
         offset = 0;
-        String url = "http://www.jinminrui.cn:3000/search?keywords=" + query + "&offset=" + offset;
+        String url = apiUrl + "/search?keywords=" + query + "&offset=" + offset;
         httpRequestUtil.getDataAsyn(url, new HttpRequestUtil.MyCallback() {
             @Override
             public void success(Call call, Response response) throws IOException {
@@ -199,7 +201,7 @@ public class SearchFragment extends Fragment implements TextWatcher {
             @Override
             public void onLoad() {
                 ++offset;
-                String url = "http://www.jinminrui.cn:3000/search?keywords=" + query + "&offset=" + offset;
+                String url = apiUrl + "/search?keywords=" + query + "&offset=" + offset;
                 HttpRequestUtil httpRequestUtil = HttpRequestUtil.getInstance();
                 httpRequestUtil.getDataAsyn(url, new HttpRequestUtil.MyCallback() {
                     @Override

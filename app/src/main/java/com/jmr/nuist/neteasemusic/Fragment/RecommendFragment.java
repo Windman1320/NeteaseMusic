@@ -53,6 +53,7 @@ public class RecommendFragment extends Fragment implements OnBannerListener {
 
     private int fetchLimit = 10;
     private String before = "";
+    private String apiUrl = "";
 
 
     public RecommendFragment() {
@@ -64,6 +65,7 @@ public class RecommendFragment extends Fragment implements OnBannerListener {
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
         View view = inflater.inflate(R.layout.fragment_recommend, container, false);
+        apiUrl = getResources().getString(R.string.api_url);
         initBanner(view);
         initListView(view);
         return view;
@@ -93,7 +95,7 @@ public class RecommendFragment extends Fragment implements OnBannerListener {
             }
         };
 
-        String imgApiUrl = "http://www.jinminrui.cn:3000/banner";
+        String imgApiUrl = apiUrl + "/banner";
         HttpRequestUtil httpRequestUtil = HttpRequestUtil.getInstance();
         httpRequestUtil.getDataAsyn(imgApiUrl, new HttpRequestUtil.MyCallback() {
             @Override
@@ -188,7 +190,7 @@ public class RecommendFragment extends Fragment implements OnBannerListener {
             }
         };
 
-        String playListApi = "http://www.jinminrui.cn:3000/top/playlist/highquality?" + "limit=" + fetchLimit;
+        String playListApi = apiUrl + "/top/playlist/highquality?" + "limit=" + fetchLimit;
         HttpRequestUtil httpRequestUtil = HttpRequestUtil.getInstance();
         httpRequestUtil.getDataAsyn(playListApi, new HttpRequestUtil.MyCallback() {
             @Override
@@ -242,7 +244,7 @@ public class RecommendFragment extends Fragment implements OnBannerListener {
         loadListView.setInterface(new ILoadListener() {
             @Override
             public void onLoad() {
-                String playListApi = "http://www.jinminrui.cn:3000/top/playlist/highquality?before=" + before + "&limit=" + fetchLimit;
+                String playListApi = apiUrl + "/top/playlist/highquality?before=" + before + "&limit=" + fetchLimit;
 //                Log.i("api", playListApi);
                 HttpRequestUtil httpRequestUtil = HttpRequestUtil.getInstance();
                 httpRequestUtil.getDataAsyn(playListApi, new HttpRequestUtil.MyCallback() {

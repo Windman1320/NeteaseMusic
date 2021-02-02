@@ -38,6 +38,7 @@ public class RankFragment extends Fragment {
     private ArrayList<PlayListItemEntity> playList;
     private PlayListAdapter playListAdapter;
     private ListView listView;
+    private String apiUrl;
 
 
     private Handler handler = new Handler() {
@@ -74,6 +75,7 @@ public class RankFragment extends Fragment {
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
         View view = inflater.inflate(R.layout.fragment_rank, container, false);
+        apiUrl = getResources().getString(R.string.api_url);
         fetchTopList();
         return view;
     }
@@ -83,7 +85,7 @@ public class RankFragment extends Fragment {
      * 请求所有排行榜数据
      */
     private void fetchTopList() {
-        String url = "http://www.jinminrui.cn:3000/toplist";
+        String url = apiUrl + "/toplist";
         HttpRequestUtil httpRequestUtil = HttpRequestUtil.getInstance();
         httpRequestUtil.getDataAsyn(url, new HttpRequestUtil.MyCallback() {
             @Override

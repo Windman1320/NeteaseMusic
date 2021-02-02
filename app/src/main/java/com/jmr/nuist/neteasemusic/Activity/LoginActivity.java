@@ -17,6 +17,7 @@ import android.widget.Toast;
 import com.alibaba.fastjson.JSONObject;
 import com.jmr.nuist.neteasemusic.R;
 import com.jmr.nuist.neteasemusic.Utils.HttpRequestUtil;
+import com.jmr.nuist.neteasemusic.Utils.MD5Util;
 
 
 import java.io.IOException;
@@ -28,6 +29,7 @@ import okhttp3.Response;
 public class LoginActivity extends AppCompatActivity {
 
     private ProgressBar progressBar;
+    private String apiUrl;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -39,7 +41,7 @@ public class LoginActivity extends AppCompatActivity {
         EditText phoneInput = this.findViewById(R.id.phone);
         EditText passwordInput = this.findViewById(R.id.password);
         progressBar = this.findViewById(R.id.progressBar);
-
+        apiUrl = getResources().getString(R.string.api_url);
         /**
          * 返回
          */
@@ -83,8 +85,8 @@ public class LoginActivity extends AppCompatActivity {
         }
 
         progressBar.setVisibility(View.VISIBLE);
-
-        String loginUrl = "http://www.jinminrui.cn:3000/login/cellphone?phone=" + phone + "&password=" + password;
+        String md5Password = MD5Util.digest(password);
+        String loginUrl = apiUrl + "/login/cellphone?phone=" + phone + "&md5_password=" + md5Password;
         HttpRequestUtil httpRequestUtil = HttpRequestUtil.getInstance();
         httpRequestUtil.getDataAsyn(loginUrl, new HttpRequestUtil.MyCallback() {
             @Override

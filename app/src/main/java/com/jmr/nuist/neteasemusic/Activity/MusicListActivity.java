@@ -47,6 +47,7 @@ public class MusicListActivity extends AppCompatActivity {
     private ArrayList<MusicListItemEntity> musicList;
     private MusicListAdapter musicListAdapter;
     private ListView listView;
+    private String apiUrl;
 
 
     Handler handler = new Handler() {
@@ -97,6 +98,7 @@ public class MusicListActivity extends AppCompatActivity {
         setContentView(R.layout.activity_music_list);
         Intent intent = getIntent();
         id = intent.getStringExtra("id");
+        apiUrl = getResources().getString(R.string.api_url);
         fetchData();
     }
 
@@ -167,7 +169,7 @@ public class MusicListActivity extends AppCompatActivity {
      * 根据歌单id获取歌单详情
      */
     private void fetchData() {
-        String url = "http://www.jinminrui.cn:3000/playlist/detail?id=" + id;
+        String url = apiUrl + "/playlist/detail?id=" + id;
         HttpRequestUtil httpRequestUtil = HttpRequestUtil.getInstance();
         httpRequestUtil.getDataAsyn(url, new HttpRequestUtil.MyCallback() {
             @Override
@@ -225,7 +227,7 @@ public class MusicListActivity extends AppCompatActivity {
 
                     }
                 };
-                String url = "http://www.jinminrui.cn:3000/check/music?id=" + songId;
+                String url = apiUrl + "/check/music?id=" + songId;
                 HttpRequestUtil httpRequestUtil = HttpRequestUtil.getInstance();
                 httpRequestUtil.getDataAsyn(url, new HttpRequestUtil.MyCallback() {
                     @Override
